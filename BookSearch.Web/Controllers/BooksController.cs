@@ -1,4 +1,5 @@
-﻿using BookSearch.Models;
+﻿using BookSearch.Global.Models;
+using BookSearch.Models;
 using BookSearch.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,7 +14,6 @@ namespace BookSearch.Controllers
 			_searchService = searchService;
 		}
 
-		// GET: Books/Autocomplete
 		[HttpGet]
 		public async Task<JsonResult> Autocomplete(string term)
 		{
@@ -26,7 +26,6 @@ namespace BookSearch.Controllers
 			return Json(suggestions);
 		}
 
-		// GET: Books/Search
 		[HttpGet]
 		public async Task<IActionResult> Search(string query, int page)
 		{
@@ -41,6 +40,20 @@ namespace BookSearch.Controllers
 			results.CurrentPage = page;
 
 			return View(results);
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> AddBook(Book book)
+		{
+			await _searchService.AddBookAsync(book);
+
+			return RedirectToAction(nameof(AddBook));
+		}
+
+		[HttpGet]
+		public async Task<IActionResult> AddBook()
+		{
+			return View();
 		}
 	}
 }

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BookSearch.Global")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e45ee9723269565c22ee9114ad03dc92ca6533e1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9f6c11ea8a1fd5698e2e42567e9d8181d458b58a")]
 [assembly: System.Reflection.AssemblyProductAttribute("BookSearch.Global")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BookSearch.Global")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

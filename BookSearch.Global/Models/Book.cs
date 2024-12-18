@@ -16,5 +16,9 @@ namespace BookSearch.Global.Models
 		public string Category { get; set; }
 
 		public int Year { get; set; }
+
+		public float[] TitleVector { get; set; } = [];
+
+		public float[] DescriptionVector { get; set; } = [];
 	}
 }
