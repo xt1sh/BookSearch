@@ -1,0 +1,12 @@
+C:\Projects\BookSearch\BookSearch.Global\bin\Debug\net9.0\BookSearch.Global.deps.json
+C:\Projects\BookSearch\BookSearch.Global\bin\Debug\net9.0\BookSearch.Global.dll
+C:\Projects\BookSearch\BookSearch.Global\bin\Debug\net9.0\BookSearch.Global.pdb
+C:\Projects\BookSearch\BookSearch.Global\obj\Debug\net9.0\BookSearch.Global.GeneratedMSBuildEditorConfig.editorconfig
+C:\Projects\BookSearch\BookSearch.Global\obj\Debug\net9.0\BookSearch.Global.AssemblyInfoInputs.cache
+C:\Projects\BookSearch\BookSearch.Global\obj\Debug\net9.0\BookSearch.Global.AssemblyInfo.cs
+C:\Projects\BookSearch\BookSearch.Global\obj\Debug\net9.0\BookSearch.Global.csproj.CoreCompileInputs.cache
+C:\Projects\BookSearch\BookSearch.Global\obj\Debug\net9.0\BookSearch.Global.sourcelink.json
+C:\Projects\BookSearch\BookSearch.Global\obj\Debug\net9.0\BookSearch.Global.dll
+C:\Projects\BookSearch\BookSearch.Global\obj\Debug\net9.0\refint\BookSearch.Global.dll
+C:\Projects\BookSearch\BookSearch.Global\obj\Debug\net9.0\BookSearch.Global.pdb
+C:\Projects\BookSearch\BookSearch.Global\obj\Debug\net9.0\ref\BookSearch.Global.dll
