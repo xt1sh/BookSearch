@@ -27,17 +27,20 @@ namespace BookSearch.Controllers
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> Search(string query, int page)
+		public async Task<IActionResult> Search(string query, string category, int page)
 		{
 			if (string.IsNullOrWhiteSpace(query))
 			{
 				return View();
 			}
 
-			var results = await _searchService.SearchBooksAsync(query, page);
+			var categories = category?.Split(',') ?? [];
+
+			var results = await _searchService.SearchBooksAsync(query, categories, page);
 
 			results.Query = query;
 			results.CurrentPage = page;
+			results.Categories = categories.ToList();
 
 			return View(results);
 		}

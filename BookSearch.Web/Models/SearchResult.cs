@@ -12,6 +12,10 @@
 
 		public string Query { get; set; }
 
+		public List<Facet> Facets { get; set; }
+
+		public List<string> Categories { get; set; } = [];
+
 		public int Count => Books.Count;
 
 		public int TotalPages => (int)Math.Ceiling((double)TotalCount / PageSize);
@@ -21,10 +25,18 @@
 		public class BookSearchResult
 		{
 			public string Title { get; set; }
-			public string Authors { get; set; }
+			public List<string> Authors { get; set; }
 			public string Description { get; set; }
-			public string Category { get; set; }
+			public List<string> Categories { get; set; }
 			public int? Year { get; set; }
+			public double Rating { get; set; }
+			public string CoverImage { get; set; }
+		}
+
+		public class Facet
+		{
+			public string Value { get; set; }
+			public long Count { get; set; }
 		}
 	}
 }

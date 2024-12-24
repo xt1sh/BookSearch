@@ -9,16 +9,16 @@ namespace BookSearch.Global.Models
 
 		public string Title { get; set; }
 
-		public string Authors { get; set; }
+		public List<string> Authors { get; set; }
 
 		public string Description { get; set; }
 
-		public string Category { get; set; }
+		public List<string> Categories { get; set; }
 
 		public int Year { get; set; }
 
-		public float[] TitleVector { get; set; } = [];
+		public double Rating { get; set; }
 
-		public float[] DescriptionVector { get; set; } = [];
+		public string CoverImage { get; set; }
 	}
 }

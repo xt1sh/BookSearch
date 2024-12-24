@@ -1,7 +1,6 @@
 ﻿using Azure.Search.Documents;
-using BookSearch.Models;
 using BookSearch.Global.Models;
-using Azure.Search.Documents.Models;
+using BookSearch.Models;
 
 namespace BookSearch.Services
 {
@@ -9,18 +8,16 @@ namespace BookSearch.Services
 	{
 		Task AddBookAsync(Book book);
 		Task<List<string>> AutocompleteAsync(string term);
-		Task<SearchResult> SearchBooksAsync(string query, int page);
+		Task<SearchResult> SearchBooksAsync(string query, string[] category, int page);
 	}
 
 	public class AzureSearchService : IAzureSearchService
 	{
 		private readonly SearchClient _searchClient;
-		private readonly IVectorizerApi _vectorizerApi;
 
-		public AzureSearchService(SearchClient searchClient, IVectorizerApi vectorizerApi)
+		public AzureSearchService(SearchClient searchClient)
 		{
 			_searchClient = searchClient;
-			_vectorizerApi = vectorizerApi;
 		}
 
 		public async Task<List<string>> AutocompleteAsync(string term)
@@ -34,28 +31,22 @@ namespace BookSearch.Services
 			return response == null ? [] : response.Value.Results.Select(r => r.Text).ToList();
 		}
 
-		public async Task<SearchResult> SearchBooksAsync(string query, int page)
+		public async Task<SearchResult> SearchBooksAsync(string query, string[] categories, int page)
 		{
-			var queryVector = await _vectorizerApi.GetVectorAsync(query);
-
-			var vectorSearchOptions = new VectorSearchOptions();
-			var q1 = new VectorizedQuery(queryVector) { Weight = 2 };
-			q1.Fields.Add("TitleVector");
-
-			var q2 = new VectorizedQuery(queryVector) { Weight = 0.5f };
-			q2.Fields.Add("DescriptionVector");
-
-			vectorSearchOptions.Queries.Add(q1);
-			vectorSearchOptions.Queries.Add(q2);
-
 			var options = new SearchOptions
 			{
 				Filter = null,
+				OrderBy = { "search.score() desc" },
 				IncludeTotalCount = true,
 				Size = SearchResult.PageSize,
 				Skip = page * SearchResult.PageSize,
-				VectorSearch = vectorSearchOptions,
+				Facets = { "Categories,count:10" }
 			};
+
+			if (categories.Length != 0)
+			{
+				options.Filter = string.Join(" and ", categories.Select(c => $"Categories/any(c: c eq '{c}')"));
+			}
 
 			var response = await _searchClient.SearchAsync<SearchResult.BookSearchResult>(query, options);
 
@@ -67,6 +58,11 @@ namespace BookSearch.Services
 			{
 				Books = books,
 				TotalCount = (int)response.Value.TotalCount,
+				Facets = response?.Value?.Facets["Categories"]?.Select(f => new SearchResult.Facet
+				{
+					Value = f.Value?.ToString(),
+					Count = f.Count.GetValueOrDefault()
+				}).ToList()
 			};
 
 			return  searchResult;
@@ -75,13 +71,6 @@ namespace BookSearch.Services
 		public async Task AddBookAsync(Book book)
 		{
 			book.Id = Guid.NewGuid().ToString();
-
-			book.TitleVector = await _vectorizerApi.GetVectorAsync(book.Title);
-
-			if (!string.IsNullOrEmpty(book.Description))
-			{
-				book.DescriptionVector = await _vectorizerApi.GetVectorAsync(book.Description);
-			}
 
 			await _searchClient.UploadDocumentsAsync([book]);
 		}

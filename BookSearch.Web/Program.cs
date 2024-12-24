@@ -12,7 +12,6 @@ var azureSearchConfig = builder.Configuration.Get<AzureSearchConfig>();
 builder.Services.AddAzureClients(b => b.AddSearchClient(azureSearchConfig.ServiceUrl, azureSearchConfig.IndexName, new AzureKeyCredential(azureSearchConfig.ApiKey)));
 
 builder.Services.AddTransient<IAzureSearchService, AzureSearchService>();
-builder.Services.AddTransient<IVectorizerApi, VectorizerApi>();
 
 builder.Services.AddControllersWithViews();
 
